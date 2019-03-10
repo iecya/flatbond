@@ -81,5 +81,14 @@
       (let [payload (helpers/payload flatbond-form client-id)]
         (POST "/flatbond"
               {:format :json
-               :params payload})))
+               :params payload
+               :handler #(re-frame/dispatch [:store-flatbond %])})))
     db))
+
+(re-frame/reg-event-db
+  :store-flatbond
+  (fn [db [_ flatbond]]
+    (-> db
+        (assoc :flatbond flatbond)
+        (assoc :active-panel :details-page)
+        (assoc :flatbond-form (:flatbond-form db/default-db)))))
