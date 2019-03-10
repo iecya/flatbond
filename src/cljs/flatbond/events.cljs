@@ -76,6 +76,7 @@
 (re-frame/reg-event-db
   :submit-form
   (fn [{:keys [flatbond-form client-id] :as db}]
+    (re-frame/dispatch [:reset-input-errors])
     (when (helpers/validate-form db)
       (let [payload (helpers/payload flatbond-form client-id)]
         (POST "/flatbond"
