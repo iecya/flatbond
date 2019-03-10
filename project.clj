@@ -6,7 +6,9 @@
                  [secretary "1.2.3"]
                  [compojure "1.5.0"]
                  [yogthos/config "0.8"]
-                 [ring "1.4.0"]]
+                 [ring "1.4.0"]
+                 [cljs-ajax "0.8.0"]
+                 [ring/ring-json "0.4.0"]]
 
   :plugins [[lein-cljsbuild "1.1.7"]
             [lein-less "1.7.5"]]

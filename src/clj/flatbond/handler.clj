@@ -2,6 +2,7 @@
   (:require [compojure.core :refer [GET defroutes]]
             [compojure.route :refer [resources]]
             [ring.util.response :refer [resource-response]]
+            [ring.middleware.json :refer [wrap-json-response]]
             [ring.middleware.reload :refer [wrap-reload]]))
 
 (def configs {:client-1 {:fixed-membership-fee        true
@@ -23,6 +24,8 @@
   (GET "/" [] (resource-response "index.html" {:root "public"}))
   (resources "/"))
 
-(def dev-handler (-> #'routes wrap-reload))
+(def dev-handler (-> #'routes
+                     wrap-json-response
+                     wrap-reload))
 
-(def handler routes)
+(def handler dev-handler)

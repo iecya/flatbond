@@ -11,3 +11,13 @@
  ::active-panel
  (fn [db _]
    (:active-panel db)))
+
+(re-frame/reg-sub
+  ::user-config
+  (fn [db _]
+    (:user-config db)))
+
+(re-frame/reg-sub
+  ::flatbond-page-error
+  (fn [db _]
+    (:flatbond-page-error db)))

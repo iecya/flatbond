@@ -2,20 +2,27 @@
   (:require
    [re-frame.core :as re-frame]
    [flatbond.subs :as subs]
-   ))
+   [reagent.core :as reagent]))
 
 
 ;; home
 
 (defn creation-form []
-  (let [name (re-frame/subscribe [::subs/name])]
-    [:div
-     [:h1 (str "Hello from " @name ". This is the Flatbond creation form.")]
+  (let [error (re-frame/subscribe [::subs/flatbond-page-error])
+        config (re-frame/subscribe [::subs/user-config])]
+    (reagent/create-class
+      {:component-did-mount (fn []
+                              (re-frame/dispatch [:get-config]))
+       :reagent-render (fn []
+                    [:div
+                     [:h1 (str "Hello from " @error ". This is the Flatbond creation form.")]
 
-     [:div
-      [:a {:href "#/about"}
-       "go to About Page"]]
-     ]))
+                     [:div (str "Fixed fee? " (:fixed-membership-fee @config))]
+
+                     [:div
+                      [:a {:href "#/about"}
+                       "go to About Page"]]
+                     ])})))
 
 
 ;; about
