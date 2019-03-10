@@ -5,17 +5,15 @@
    [reagent.core :as reagent]
    [flatbond.components.rent-input :as rent-input]
    [flatbond.helpers :as helpers]
-   [flatbond.components.membership-input :as membership-input]))
-
-
-;; home
+   [flatbond.components.membership-input :as membership-input]
+   [flatbond.components.postcode-input :as postcode-input]))
 
 (defn creation-form []
   (let [error (re-frame/subscribe [::subs/flatbond-page-error])
-        config (re-frame/subscribe [::subs/user-config])
         rent-period (re-frame/subscribe [::subs/rent-period])
         rent-value (re-frame/subscribe [::subs/rent-value])
-        membership-fee (re-frame/subscribe [::subs/membership-fee])]
+        membership-fee (re-frame/subscribe [::subs/membership-fee])
+        postcode (re-frame/subscribe [::subs/postcode])]
     (reagent/create-class
       {:component-did-mount (fn []
                               (re-frame/dispatch [:get-config]))
@@ -33,7 +31,9 @@
                                    [rent-input/input :weekly @rent-period @rent-value]
                                    [rent-input/input :monthly @rent-period @rent-value]]
                                   [:div.form-row
-                                   [membership-input/input (helpers/add-vat @membership-fee)]]])])})))
+                                   [membership-input/input (helpers/add-vat @membership-fee)]]
+                                  [:div.form-row
+                                   [postcode-input/input @postcode]]])])})))
 
 
 ;; about

@@ -36,3 +36,8 @@
   ::membership-fee
   (fn [db _]
     (:membership-fee db)))
+
+(re-frame/reg-sub
+  ::postcode
+  (fn [db _]
+    (:postocde db)))

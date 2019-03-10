@@ -57,3 +57,8 @@
     (-> db
         (assoc-in [:flatbond-form :rent-value period] value)
         (assoc :membership-fee (helpers/calculate-membership period value (:user-config db))))))
+
+(re-frame/reg-event-db
+  :update-postcode
+  (fn [db [_ value]]
+    (assoc db :postcode value)))
