@@ -49,11 +49,17 @@
   [value]
   (* 100 value))
 
+(defn- to-weekly-rent
+  [val]
+  (-> val (* 12) (/ 52) to-int))
+
 (defn payload
   [{:keys [rent-period rent-value postcode membership-fee]} client-id]
-  {:rent (to-pence (get rent-value rent-period))
-   :membership-fee (-> membership-fee add-vat to-pence)
-   :postcode postcode
-   :client-id client-id})
+  (let [rent (get rent-value rent-period)
+        weekly-rent (if (= :weekly rent-period) rent (to-weekly-rent rent))]
+    {:rent           (to-pence weekly-rent)
+     :membership-fee (-> membership-fee add-vat to-pence)
+     :postcode       postcode
+     :client-id      client-id}))
 
 
