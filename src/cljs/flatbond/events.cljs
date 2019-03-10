@@ -35,7 +35,12 @@
 (re-frame/reg-event-db
   :update-config
   (fn [db [_ config]]
-    (assoc db :user-config config)))
+    (let [membership-fee (if (:fixed-membership-fee config)
+                           (:fixed-membership-fee-amount config)
+                           (get-in db [:flatbond-form :membership-fee]))]
+      (-> db
+          (assoc :user-config config)
+          (assoc-in [:flatbond-form :membership-fee] membership-fee)))))
 
 (re-frame/reg-event-db
   :update-flatbond-error
