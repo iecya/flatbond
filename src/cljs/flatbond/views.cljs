@@ -24,7 +24,7 @@
                               (let [membership-fee-amount (if (:fixed-membership-fee @config)
                                                             (:fixed-membership-fee-amount @config)
                                                             @membership-fee)]
-                                [:div
+                                [:div.app-section
                                  [:h1 "Create a new Flatbond"]
 
                                  (if @error
@@ -58,15 +58,17 @@
      [:div
       "Thanks for submitting your flatbond"
 
-      [:div.row.flatbond-summary
-       [:div.col-sm-3.flatbond-title "Rent (weekly)"]
-       [:div.col-sm-3 (str "£" (-> (@flatbond "rent") (/ 100) Math/round))]]
-      [:div.row
-       [:div.col-sm-3.flatbond-title "Membership fee (VAT Inc.)"]
-       [:div.col-sm-3 (str "£" (-> (@flatbond "membership-fee") (/ 100) Math/round))]]
-      [:div.row
-       [:div.col-sm-3.flatbond-title "Postcode"]
-       [:div.col-sm-3 (string/upper-case  (@flatbond "postcode"))]]
+      [:div.app-section
+
+       [:div.row.flatbond-summary
+        [:div.col-sm-3.flatbond-title "Rent (weekly)"]
+        [:div.col-sm-3 (str "£" (-> (@flatbond "rent") (/ 100) Math/round))]]
+       [:div.row
+        [:div.col-sm-3.flatbond-title "Membership fee (VAT Inc.)"]
+        [:div.col-sm-3 (str "£" (-> (@flatbond "membership-fee") (/ 100) Math/round))]]
+       [:div.row
+        [:div.col-sm-3.flatbond-title "Postcode"]
+        [:div.col-sm-3 (string/upper-case (@flatbond "postcode"))]]]
 
       [:a {:href "#/"}
        "go to Home Page"]]]))
