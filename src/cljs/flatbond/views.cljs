@@ -70,7 +70,10 @@
         [:div.col-sm-3.flatbond-title "Postcode"]
         [:div.col-sm-3 (string/upper-case (@flatbond "postcode"))]]]
 
-      [:a {:href "#/"}
+      [:a {:href ""
+           :on-click #(do
+                        (.preventDefault %)
+                        (re-frame/dispatch [:navigate :flatbond-create]))}
        "go to Home Page"]]]))
 
 

@@ -100,3 +100,8 @@
         (assoc :flatbond flatbond)
         (assoc :active-panel :details-page)
         (assoc :flatbond-form (:flatbond-form db/default-db)))))
+
+(re-frame/reg-event-db
+  :navigate
+  (fn [db [_ dest]]
+    (assoc db :active-panel dest)))
