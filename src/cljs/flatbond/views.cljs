@@ -4,7 +4,6 @@
    [flatbond.subs :as subs]
    [reagent.core :as reagent]
    [flatbond.components.rent-input :as rent-input]
-   [flatbond.components.membership-fee :as membership-fee]
    [flatbond.helpers :as helpers]))
 
 
@@ -19,7 +18,7 @@
       {:component-did-mount (fn []
                               (re-frame/dispatch [:get-config]))
        :reagent-render      (fn []
-                              (let [membership-fee (helpers/calculate-membership @rent-period @rent-value)]
+                              (let [membership-fee (helpers/calculate-membership @rent-period @rent-value @config)]
                                 [:div
                                  [:h1 "Create a new Flatbond"]
 
@@ -34,7 +33,7 @@
                                      [rent-input/input :monthly @rent-period @rent-value]]
                                     [:div.form-row
                                      [:div
-                                      [:p "Membership fee: £" membership-fee]]]])]))})))
+                                      [:p "Membership fee: £" (helpers/add-vat membership-fee)]]]])]))})))
 
 
 ;; about

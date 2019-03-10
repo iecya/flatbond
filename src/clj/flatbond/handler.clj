@@ -7,7 +7,7 @@
 
 (def configs {:client-1 {:fixed-membership-fee        true
                          :fixed-membership-fee-amount 100}
-              :cliend-2 {:fixed-membership-fee        false
+              :client-2 {:fixed-membership-fee        false
                          :fixed-membership-fee-amount 200}})
 
 
