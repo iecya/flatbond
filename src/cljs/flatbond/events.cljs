@@ -66,9 +66,16 @@
 (re-frame/reg-event-db
   :update-input-error
   (fn [db [_ type]]
-    (update-in db [:form-errors type] not)))
+    (assoc-in db [:form-errors type] true)))
 
 (re-frame/reg-event-db
   :reset-input-errors
   (fn [db]
     (dissoc db :input-errors)))
+
+(re-frame/reg-event-db
+  :submit-form
+  (fn [db]
+    (let [form-validation (helpers/validate-form db)]
+      (println form-validation)
+      db)))

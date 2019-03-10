@@ -1,21 +1,18 @@
 (ns flatbond.components.rent-input
   (:require [re-frame.core :as re-frame]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            [flatbond.config :as config]))
 
 
 (def labels-info
   {:weekly "(Min £25 - Max £2000)"
    :monthly "(Min £110 - Max £8660)"})
 
-(def rent-range
-  {:weekly {:min 25 :max 2000}
-   :monthly {:min 110 :max 8660}})
-
 (defn input
   [type active-type rent-value errors]
   (let [rent-type (name type)
-        min-rent (get-in rent-range [type :min])
-        max-rent (get-in rent-range [type :max])]
+        min-rent (get-in config/rent-ranges [type :min])
+        max-rent (get-in config/rent-ranges [type :max])]
     [:div.col
      [:div.custom-control.custom-radio
       [:input {:type      "radio"

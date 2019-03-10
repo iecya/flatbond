@@ -34,7 +34,12 @@
                                   [:div.form-row
                                    [membership-input/input (helpers/add-vat @membership-fee)]]
                                   [:div.form-row
-                                   [postcode-input/input @postcode @errors]]])])})))
+                                   [postcode-input/input @postcode @errors]]
+                                  [:div.form-row
+                                   [:button.btn.btn-primary {:type "submit"
+                                                             :on-click #(do
+                                                                          (.preventDefault %)
+                                                                          (re-frame/dispatch [:submit-form]))} "Submit"]]])])})))
 
 
 ;; about
