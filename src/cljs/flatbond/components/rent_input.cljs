@@ -24,7 +24,7 @@
                :value     rent-type
                :onChange  #(re-frame/dispatch [:update-rent-period (-> % .-target .-value)])}]
       [:label {:className "custom-control-label"
-               :for       (str "rent-" rent-type)} (str (string/capitalize rent-type) " rent (£)") [:span.rent-range-info (get labels-info type)]]]
+               :for       (str "rent-" rent-type)} (str (string/capitalize rent-type) " rent (£)") [:span.label-info (get labels-info type)]]]
      [:div.form-group
       [:label {:className "sr-only"
                :for       (str rent-type "-rent-value")} (str (string/capitalize rent-type) " rent")]

@@ -1,6 +1,13 @@
-.rent-range-info {
+.label-info {
     font-size: 0.8em;
     color: #adadad;
     margin-left: 5px;
     font-style: italic;
+}
+
+.form-control-plaintext[readonly] {
+    background-color: transparent;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: auto;
 }

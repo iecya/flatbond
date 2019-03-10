@@ -19,4 +19,4 @@
 
 (defn add-vat
   [value]
-  (* value 1.2))
+  (to-decimal (* value 1.2)))

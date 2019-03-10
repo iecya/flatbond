@@ -4,7 +4,8 @@
    [flatbond.subs :as subs]
    [reagent.core :as reagent]
    [flatbond.components.rent-input :as rent-input]
-   [flatbond.helpers :as helpers]))
+   [flatbond.helpers :as helpers]
+   [flatbond.components.membership-input :as membership-input]))
 
 
 ;; home
@@ -32,8 +33,7 @@
                                      [rent-input/input :weekly @rent-period @rent-value]
                                      [rent-input/input :monthly @rent-period @rent-value]]
                                     [:div.form-row
-                                     [:div
-                                      [:p "Membership fee: £" (helpers/add-vat membership-fee)]]]])]))})))
+                                     [membership-input/input (helpers/add-vat membership-fee)]]])]))})))
 
 
 ;; about
