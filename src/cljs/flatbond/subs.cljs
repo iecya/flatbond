@@ -41,3 +41,8 @@
   ::postcode
   (fn [db _]
     (:postocde db)))
+
+(re-frame/reg-sub
+  ::form-errors
+  (fn [db _]
+    (:form-errors db)))

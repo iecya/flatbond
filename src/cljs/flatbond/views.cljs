@@ -13,7 +13,8 @@
         rent-period (re-frame/subscribe [::subs/rent-period])
         rent-value (re-frame/subscribe [::subs/rent-value])
         membership-fee (re-frame/subscribe [::subs/membership-fee])
-        postcode (re-frame/subscribe [::subs/postcode])]
+        postcode (re-frame/subscribe [::subs/postcode])
+        errors (re-frame/subscribe [::subs/form-errors])]
     (reagent/create-class
       {:component-did-mount (fn []
                               (re-frame/dispatch [:get-config]))
@@ -28,12 +29,12 @@
 
                                  [:form
                                   [:div.form-row
-                                   [rent-input/input :weekly @rent-period @rent-value]
-                                   [rent-input/input :monthly @rent-period @rent-value]]
+                                   [rent-input/input :weekly @rent-period @rent-value @errors]
+                                   [rent-input/input :monthly @rent-period @rent-value @errors]]
                                   [:div.form-row
                                    [membership-input/input (helpers/add-vat @membership-fee)]]
                                   [:div.form-row
-                                   [postcode-input/input @postcode]]])])})))
+                                   [postcode-input/input @postcode @errors]]])])})))
 
 
 ;; about

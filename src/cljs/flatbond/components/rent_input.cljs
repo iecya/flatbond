@@ -9,11 +9,13 @@
 
 (def rent-range
   {:weekly {:min 25 :max 2000}
-   :monthly {:min 110 :mac 8660}})
+   :monthly {:min 110 :max 8660}})
 
 (defn input
-  [type active-type rent-value]
-  (let [rent-type (name type)]
+  [type active-type rent-value errors]
+  (let [rent-type (name type)
+        min-rent (get-in rent-range [type :min])
+        max-rent (get-in rent-range [type :max])]
     [:div.col
      [:div.custom-control.custom-radio
       [:input {:type      "radio"
@@ -34,5 +36,7 @@
                :disabled    (not= type active-type)
                :onChange    #(re-frame/dispatch [:update-rent-value type (-> % .-target .-value)])
                :value       (get rent-value type)
-               :min         (get-in rent-range [type :min])
-               :max         (get-in rent-range [type :max])}]]]))
+               :min         min-rent
+               :max         max-rent}]
+      (when (get errors type)
+        [:div.text-danger "Rent must be between £" min-rent " and £" max-rent])]]))

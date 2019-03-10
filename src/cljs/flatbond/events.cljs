@@ -62,3 +62,13 @@
   :update-postcode
   (fn [db [_ value]]
     (assoc db :postcode value)))
+
+(re-frame/reg-event-db
+  :update-input-error
+  (fn [db [_ type]]
+    (update-in db [:form-errors type] not)))
+
+(re-frame/reg-event-db
+  :reset-input-errors
+  (fn [db]
+    (dissoc db :input-errors)))

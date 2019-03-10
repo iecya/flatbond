@@ -2,7 +2,7 @@
   (:require [re-frame.core :as re-frame]))
 
 (defn input
-  [postcode]
+  [postcode errors]
   [:div.col
    [:div.form-group
     [:label {:for       "postcode"} "Postcode"]
@@ -10,4 +10,6 @@
              :class       "form-control"
              :placeholder (str "Enter your postcode")
              :onChange    #(re-frame/dispatch [:update-postcode type (-> % .-target .-value)])
-             :value       postcode}]]])
+             :value       postcode}]
+    (when (:postcode errors)
+      [:div.text-danger "Invalid postcode"])]])
