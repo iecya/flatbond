@@ -21,3 +21,13 @@
   ::flatbond-page-error
   (fn [db _]
     (:flatbond-page-error db)))
+
+(re-frame/reg-sub
+  ::rent-period
+  (fn [db _]
+    (get-in db [:flatbond-form :rent-period])))
+
+(re-frame/reg-sub
+  ::rent-value
+  (fn [db _]
+    (get-in db [:flatbond-form :rent-value])))

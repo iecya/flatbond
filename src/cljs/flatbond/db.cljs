@@ -1,5 +1,8 @@
 (ns flatbond.db)
 
 (def default-db
-  {:name "re-frame"
-   :client-id :client-1})
+  {:name          "Flatbond"
+   :client-id     :client-1
+   :flatbond-form {:rent-period :weekly
+                   :rent-value  {:weekly  25
+                                 :monthly 110}}})

@@ -40,3 +40,17 @@
   :update-flatbond-error
   (fn [db [_ error-msg]]
     (assoc db :flatbond-page-error error-msg)))
+
+
+
+;; FORM EVENTS
+
+(re-frame/reg-event-db
+  :update-rent-period
+  (fn [db [_ period]]
+    (assoc-in db [:flatbond-form :rent-period] (keyword period))))
+
+(re-frame/reg-event-db
+  :update-rent-value
+  (fn [db [_ period value]]
+    (assoc-in db [:flatbond-form :rent-value period] value)))
