@@ -7,10 +7,10 @@
 
 ;; home
 
-(defn home-panel []
+(defn creation-form []
   (let [name (re-frame/subscribe [::subs/name])]
     [:div
-     [:h1 (str "Hello from " @name ". This is the Home Page.")]
+     [:h1 (str "Hello from " @name ". This is the Flatbond creation form.")]
 
      [:div
       [:a {:href "#/about"}
@@ -20,9 +20,9 @@
 
 ;; about
 
-(defn about-panel []
+(defn details-page []
   [:div
-   [:h1 "This is the About Page."]
+   [:h1 "This is the Details page."]
 
    [:div
     [:a {:href "#/"}
@@ -33,8 +33,8 @@
 
 (defn- panels [panel-name]
   (case panel-name
-    :home-panel [home-panel]
-    :about-panel [about-panel]
+    :flatbond-create [creation-form]
+    :details-page [details-page]
     [:div]))
 
 (defn show-panel [panel-name]

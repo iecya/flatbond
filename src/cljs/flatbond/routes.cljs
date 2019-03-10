@@ -22,11 +22,10 @@
   ;; --------------------
   ;; define routes here
   (defroute "/" []
-    (re-frame/dispatch [::events/set-active-panel :home-panel])
-    )
+    (re-frame/dispatch [::events/set-active-panel :flatbond-create]))
 
   (defroute "/about" []
-    (re-frame/dispatch [::events/set-active-panel :about-panel]))
+    (re-frame/dispatch [::events/set-active-panel :details-page]))
 
 
   ;; --------------------
