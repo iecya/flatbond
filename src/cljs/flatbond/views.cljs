@@ -10,6 +10,7 @@
 
 (defn creation-form []
   (let [error (re-frame/subscribe [::subs/flatbond-page-error])
+        config (re-frame/subscribe [::subs/user-config])
         rent-period (re-frame/subscribe [::subs/rent-period])
         rent-value (re-frame/subscribe [::subs/rent-value])
         membership-fee (re-frame/subscribe [::subs/membership-fee])
@@ -19,27 +20,30 @@
       {:component-did-mount (fn []
                               (re-frame/dispatch [:get-config]))
        :reagent-render      (fn []
-                              [:div
-                               [:h1 "Create a new Flatbond"]
+                              (let [membership-fee-amount (if (:fixed-membership-fee @config)
+                                                            (:fixed-membership-fee-amount @config)
+                                                            @membership-fee)]
+                                [:div
+                                 [:h1 "Create a new Flatbond"]
 
-                               (if @error
-                                 [:div
-                                  [:h2 "Ops, something went wrong!"]
-                                  [:p "Please try again later"]]
+                                 (if @error
+                                   [:div
+                                    [:h2 "Ops, something went wrong!"]
+                                    [:p "Please try again later"]]
 
-                                 [:form
-                                  [:div.form-row
-                                   [rent-input/input :weekly @rent-period @rent-value @errors]
-                                   [rent-input/input :monthly @rent-period @rent-value @errors]]
-                                  [:div.form-row
-                                   [membership-input/input (helpers/add-vat @membership-fee)]]
-                                  [:div.form-row
-                                   [postcode-input/input @postcode @errors]]
-                                  [:div.form-row
-                                   [:button.btn.btn-primary {:type "submit"
-                                                             :on-click #(do
-                                                                          (.preventDefault %)
-                                                                          (re-frame/dispatch [:submit-form]))} "Submit"]]])])})))
+                                   [:form
+                                    [:div.form-row
+                                     [rent-input/input :weekly @rent-period @rent-value @errors]
+                                     [rent-input/input :monthly @rent-period @rent-value @errors]]
+                                    [:div.form-row
+                                     [membership-input/input (helpers/add-vat membership-fee-amount)]]
+                                    [:div.form-row
+                                     [postcode-input/input @postcode @errors]]
+                                    [:div.form-row
+                                     [:button.btn.btn-primary {:type     "submit"
+                                                               :on-click #(do
+                                                                            (.preventDefault %)
+                                                                            (re-frame/dispatch [:submit-form]))} "Submit"]]])]))})))
 
 
 ;; about

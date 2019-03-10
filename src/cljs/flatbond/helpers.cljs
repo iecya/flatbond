@@ -6,23 +6,22 @@
 {:fixed-membership-fee        false
  :fixed-membership-fee-amount 200}
 
-(defn to-decimal
+(defn to-int
   [value]
   (if (number? value)
-    (let [factor (Math/pow 10 2)]
-      (/ (Math/round (* value factor)) factor))
+    (Math/round value)
     value))
 
 (defn add-vat
   [value]
-  (to-decimal (* value 1.2)))
+  (to-int (* value 1.2)))
 
 (defn calculate-membership
   [period value config]
   (cond
     (:fixed-membership-fee config) (:fixed-membership-fee-amount config)
     (= :weekly period) (max 120 value)
-    :default (max 120 (-> value (* 12) (/ 52) to-decimal))))
+    :default (max 120 (-> value (* 12) (/ 52) to-int))))
 
 (defn- validate-rent
   [{:keys [rent-period rent-value]}]
