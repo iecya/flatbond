@@ -11,6 +11,5 @@
      [:input {:type      "text"
               :read-only true
               :class     "form-control form-control-plaintext"
-              ;:onChange    #(re-frame/dispatch [:update-membership-fee (-> % .-target .-value)])
               :value     (str "£" value)}]]
     [:p.label-info "(VAT Included)"]]])

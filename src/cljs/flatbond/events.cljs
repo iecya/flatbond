@@ -1,8 +1,9 @@
 (ns flatbond.events
   (:require
-   [re-frame.core :as re-frame]
-   [flatbond.db :as db]
-   [ajax.core :refer [GET]]))
+    [re-frame.core :as re-frame]
+    [flatbond.db :as db]
+    [ajax.core :refer [GET]]
+    [flatbond.helpers :as helpers]))
 
 
 (def request-options
@@ -53,4 +54,6 @@
 (re-frame/reg-event-db
   :update-rent-value
   (fn [db [_ period value]]
-    (assoc-in db [:flatbond-form :rent-value period] value)))
+    (-> db
+        (assoc-in [:flatbond-form :rent-value period] value)
+        (assoc :membership-fee (helpers/calculate-membership period value (:user-config db))))))

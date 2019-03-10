@@ -31,3 +31,8 @@
   ::rent-value
   (fn [db _]
     (get-in db [:flatbond-form :rent-value])))
+
+(re-frame/reg-sub
+  ::membership-fee
+  (fn [db _]
+    (:membership-fee db)))

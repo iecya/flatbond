@@ -10,13 +10,15 @@
       (/ (Math/round (* value factor)) factor))
     value))
 
+(defn add-vat
+  [value]
+  (to-decimal (* value 1.2)))
+
 (defn calculate-membership
   [period value config]
   (cond
     (:fixed-membership-fee config) (:fixed-membership-fee-amount config)
-    (= :weekly period) (max 120 (get value period))
-    :default (max 120 (-> value period (* 12) (/ 52) to-decimal))))
+    (= :weekly period) (max 120 value)
+    :default (max 120 (-> value (* 12) (/ 52) to-decimal))))
 
-(defn add-vat
-  [value]
-  (to-decimal (* value 1.2)))
+

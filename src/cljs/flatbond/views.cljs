@@ -14,26 +14,26 @@
   (let [error (re-frame/subscribe [::subs/flatbond-page-error])
         config (re-frame/subscribe [::subs/user-config])
         rent-period (re-frame/subscribe [::subs/rent-period])
-        rent-value (re-frame/subscribe [::subs/rent-value])]
+        rent-value (re-frame/subscribe [::subs/rent-value])
+        membership-fee (re-frame/subscribe [::subs/membership-fee])]
     (reagent/create-class
       {:component-did-mount (fn []
                               (re-frame/dispatch [:get-config]))
        :reagent-render      (fn []
-                              (let [membership-fee (helpers/calculate-membership @rent-period @rent-value @config)]
-                                [:div
-                                 [:h1 "Create a new Flatbond"]
+                              [:div
+                               [:h1 "Create a new Flatbond"]
 
-                                 (if @error
-                                   [:div
-                                    [:h2 "Ops, something went wrong!"]
-                                    [:p "Please try again later"]]
+                               (if @error
+                                 [:div
+                                  [:h2 "Ops, something went wrong!"]
+                                  [:p "Please try again later"]]
 
-                                   [:form
-                                    [:div.form-row
-                                     [rent-input/input :weekly @rent-period @rent-value]
-                                     [rent-input/input :monthly @rent-period @rent-value]]
-                                    [:div.form-row
-                                     [membership-input/input (helpers/add-vat membership-fee)]]])]))})))
+                                 [:form
+                                  [:div.form-row
+                                   [rent-input/input :weekly @rent-period @rent-value]
+                                   [rent-input/input :monthly @rent-period @rent-value]]
+                                  [:div.form-row
+                                   [membership-input/input (helpers/add-vat @membership-fee)]]])])})))
 
 
 ;; about
