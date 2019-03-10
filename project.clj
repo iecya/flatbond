@@ -34,8 +34,7 @@
              :main         flatbond.server
              :aot          [flatbond.server]
              :uberjar-name "flatbond.jar"
-             :prep-tasks   ["compile" ["cljsbuild" "once" "min"]["less" "once"]]}
-   }
+             :prep-tasks   ["compile" ["cljsbuild" "once" "min"]["less" "once"]]}}
 
   :cljsbuild
   {:builds
@@ -62,4 +61,6 @@
 
 
     ]}
+
+  :aliases {"dev" ["figwheel" "dev"]}
   )
