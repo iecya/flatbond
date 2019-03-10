@@ -35,9 +35,7 @@
 (re-frame/reg-event-db
   :update-config
   (fn [db [_ config]]
-    (let [membership-fee (if (:fixed-membership-fee config)
-                           (:fixed-membership-fee-amount config)
-                           (get-in db [:flatbond-form :membership-fee]))]
+    (let [membership-fee (if (:fixed-membership-fee config) (:fixed-membership-fee-amount config) 120)]
       (-> db
           (assoc :user-config config)
           (assoc-in [:flatbond-form :membership-fee] membership-fee)))))
@@ -54,7 +52,12 @@
 (re-frame/reg-event-db
   :update-rent-period
   (fn [db [_ period]]
-    (assoc-in db [:flatbond-form :rent-period] (keyword period))))
+    (let [rent-period (keyword period)
+          value (get-in db [:flatbond-form :rent-value rent-period])
+          config (:user-config db)]
+      (-> db
+          (assoc-in [:flatbond-form :rent-period] rent-period)
+          (assoc-in [:flatbond-form :membership-fee] (helpers/calculate-membership rent-period value config))))))
 
 (re-frame/reg-event-db
   :update-rent-value

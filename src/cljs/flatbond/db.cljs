@@ -7,6 +7,5 @@
    :flatbond-form {:rent-period :weekly
                    :rent-value  {:weekly  25
                                  :monthly 110}
-                   :postcode ""
-                   :membership-fee 120}
+                   :postcode ""}
    :rent-range config/rent-ranges})
