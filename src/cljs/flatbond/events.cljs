@@ -61,7 +61,7 @@
 (re-frame/reg-event-db
   :update-postcode
   (fn [db [_ value]]
-    (assoc db :postcode value)))
+    (assoc-in db [:flatbond-form :postcode] value)))
 
 (re-frame/reg-event-db
   :update-input-error
@@ -71,7 +71,7 @@
 (re-frame/reg-event-db
   :reset-input-errors
   (fn [db]
-    (dissoc db :input-errors)))
+    (dissoc db :form-errors)))
 
 (re-frame/reg-event-db
   :submit-form

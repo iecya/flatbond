@@ -40,7 +40,7 @@
 (re-frame/reg-sub
   ::postcode
   (fn [db _]
-    (:postocde db)))
+    (get-in db [:flatbond-form :postcode])))
 
 (re-frame/reg-sub
   ::form-errors

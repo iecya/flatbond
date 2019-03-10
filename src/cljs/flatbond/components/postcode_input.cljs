@@ -5,11 +5,11 @@
   [postcode errors]
   [:div.col
    [:div.form-group
-    [:label {:for       "postcode"} "Postcode"]
+    [:label {:for "postcode"} "Postcode"]
     [:input {:type        "text"
              :class       "form-control"
              :placeholder (str "Enter your postcode")
-             :onChange    #(re-frame/dispatch [:update-postcode type (-> % .-target .-value)])
+             :on-change   #(re-frame/dispatch [:update-postcode (-> % .-target .-value)])
              :value       postcode}]
     (when (:postcode errors)
       [:div.text-danger "Invalid postcode"])]])

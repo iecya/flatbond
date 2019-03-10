@@ -1,6 +1,7 @@
 (ns flatbond.helpers
   (:require [flatbond.config :as config]
-            [re-frame.core :as re-frame]))
+            [re-frame.core :as re-frame]
+            [clojure.string :as string]))
 
 {:fixed-membership-fee        false
  :fixed-membership-fee-amount 200}
@@ -31,9 +32,17 @@
           false)
       true)))
 
+(def ^:private postcode-regex #"^([A-PR-UWYZ0-9][A-HK-Y0-9][AEHMNPRTVXY0-9]?[ABEHMNPRVWXY0-9]? {1,2}[0-9][ABD-HJLN-UW-Z]{2}|GIR 0AA)$")
+
+(defn- validate-postcode
+  [{postcode :postcode}]
+  (if (and (seq postcode) (re-matches postcode-regex (string/upper-case postcode)))
+    true
+    (re-frame/dispatch [:update-input-error :postcode])))
+
 (defn validate-form
   [{:keys [flatbond-form] :as db}]
   (and (validate-rent flatbond-form)
-       #_(validate-postcode)))
+       (validate-postcode flatbond-form)))
 
 
