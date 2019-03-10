@@ -1,10 +1,16 @@
 (ns flatbond.helpers
   (:require [clojure.string :as string]))
 
-(def configs {:client-1 {:fixed-membership-fee        true
-                         :fixed-membership-fee-amount 100}
-              :client-2 {:fixed-membership-fee        false
-                         :fixed-membership-fee-amount 200}})
+(def configs [{:id 1
+               :fixed-membership-fee        true
+               :fixed-membership-fee-amount 100}
+              {:id 2
+               :fixed-membership-fee        false
+               :fixed-membership-fee-amount 200}])
+
+(defn get-config
+  [id]
+  (first (filter #(= id (:id %)) configs)))
 
 (defn- validate-rent
   [rent]
@@ -19,17 +25,18 @@
 
 (defn- get-client-fee
   [id]
-  (-> (get-in configs [id :fixed-membership-fee-amount])
+  (println "Id: " id)
+  (-> (get-config id)
+      :fixed-membership-fee-amount
       (* 1.2)
       (* 100)
       int))
 
 (defn- validate-membership-fee
   [fee rent client-id]
-  (let [clientid (keyword client-id)
-        fixed? (get-in configs [clientid :fixed-membership-fee])
+  (let [fixed? (-> client-id Integer. get-config :fixed-membership-fee)
         client-fee (if fixed?
-                     (get-client-fee (keyword client-id))
+                     (get-client-fee (Integer. client-id))
                      (-> rent (* 1.2) Math/round int))]
     (= fee client-fee)))
 

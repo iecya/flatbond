@@ -12,9 +12,9 @@
 
 (defroutes routes
   (GET "/config/:client-id" [client-id]
-    (if-let [config (get helpers/configs (keyword client-id))]
+    (if-let [config (helpers/get-config (Integer. client-id))]
       {:status 200
-       :body config}
+       :body (dissoc config :id)}
       {:status 404
        :body "User data not found"}))
   (GET "/config" []

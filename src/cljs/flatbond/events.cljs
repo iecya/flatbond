@@ -26,7 +26,7 @@
 (re-frame/reg-event-db
   :get-config
   (fn [db]
-    (GET (str "/config/" (-> db :client-id name))
+    (GET (str "/config/" (-> db :client-id))
               (merge request-options
                      {:handler #(re-frame/dispatch [:update-config %1])
                       :error-handler #(re-frame/dispatch [:update-flatbond-error %1])}))
