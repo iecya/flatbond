@@ -8,7 +8,8 @@
                  [yogthos/config "0.8"]
                  [ring "1.4.0"]
                  [cljs-ajax "0.8.0"]
-                 [ring/ring-json "0.4.0"]]
+                 [ring/ring-json "0.4.0"]
+                 [ring-middleware-format "0.7.2"]]
 
   :plugins [[lein-cljsbuild "1.1.7"]
             [lein-less "1.7.5"]]
@@ -20,10 +21,15 @@
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
 
   :figwheel {:css-dirs ["resources/public/css"]
-             :ring-handler flatbond.handler/dev-handler}
+             :ring-handler flatbond.handler/dev-handler
+             :server-logfile false}
+
+  :server-logfile false
 
   :less {:source-paths ["less"]
          :target-path  "resources/public/css"}
+
+  :ring {:handler flatbond.handler/handler}
 
   :profiles
   {:dev

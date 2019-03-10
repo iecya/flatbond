@@ -3,28 +3,38 @@
             [compojure.route :refer [resources]]
             [ring.util.response :refer [resource-response]]
             [ring.middleware.json :refer [wrap-json-response]]
-            [ring.middleware.reload :refer [wrap-reload]]))
+            [ring.middleware.reload :refer [wrap-reload]]
+            [flatbond.helpers :as helpers]
 
-(def configs {:client-1 {:fixed-membership-fee        true
-                         :fixed-membership-fee-amount 100}
-              :client-2 {:fixed-membership-fee        false
-                         :fixed-membership-fee-amount 200}})
+            [ring.middleware.format :refer [wrap-restful-format]]
+            [ring.middleware.params :refer [wrap-params]]))
 
+(def flatbonds (atom []))
 
 (defroutes routes
   (GET "/config/:client-id" [client-id]
-    (if-let [config (get configs (keyword client-id))]
+    (if-let [config (get helpers/configs (keyword client-id))]
       {:status 200
        :body config}
       {:status 404
        :body "User data not found"}))
   (GET "/config" []
     {:status 200
-     :body configs})
+     :body helpers/configs})
+  (POST "/flatbond" req
+    (let [params (:params req)]
+      (if (helpers/validate-data params)
+        (do
+          (swap! flatbonds conj params)
+          {:status 200
+           :body   (last @flatbonds)})
+        {:status 500
+         :body   "Invalid data"})))
   (GET "/" [] (resource-response "index.html" {:root "public"}))
   (resources "/"))
 
 (def dev-handler (-> #'routes
+                     (wrap-restful-format :formats [:json-kw :edn])
                      wrap-json-response
                      wrap-reload))
 
