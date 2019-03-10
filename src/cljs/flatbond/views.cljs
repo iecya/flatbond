@@ -1,12 +1,13 @@
 (ns flatbond.views
   (:require
-   [re-frame.core :as re-frame]
-   [flatbond.subs :as subs]
-   [reagent.core :as reagent]
-   [flatbond.components.rent-input :as rent-input]
-   [flatbond.helpers :as helpers]
-   [flatbond.components.membership-input :as membership-input]
-   [flatbond.components.postcode-input :as postcode-input]))
+    [re-frame.core :as re-frame]
+    [flatbond.subs :as subs]
+    [reagent.core :as reagent]
+    [flatbond.components.rent-input :as rent-input]
+    [flatbond.helpers :as helpers]
+    [flatbond.components.membership-input :as membership-input]
+    [flatbond.components.postcode-input :as postcode-input]
+    [clojure.string :as string]))
 
 (defn creation-form []
   (let [error (re-frame/subscribe [::subs/flatbond-page-error])
@@ -48,13 +49,27 @@
 
 ;; about
 
-(defn details-page []
-  [:div
-   [:h1 "This is the Details page."]
+(defn details-page
+  []
+  (let [flatbond (re-frame/subscribe [::subs/flatbond])]
+    [:div
+     [:h1 "Flatbond summary"]
 
-   [:div
-    [:a {:href "#/"}
-     "go to Home Page"]]])
+     [:div
+      "Thanks for submitting your flatbond"
+
+      [:div.row.flatbond-summary
+       [:div.col-sm-3.flatbond-title "Rent (weekly)"]
+       [:div.col-sm-3 (str "£" (-> (@flatbond "rent") (/ 100) Math/round))]]
+      [:div.row
+       [:div.col-sm-3.flatbond-title "Membership fee (VAT Inc.)"]
+       [:div.col-sm-3 (str "£" (-> (@flatbond "membership-fee") (/ 100) Math/round))]]
+      [:div.row
+       [:div.col-sm-3.flatbond-title "Postcode"]
+       [:div.col-sm-3 (string/upper-case  (@flatbond "postcode"))]]
+
+      [:a {:href "#/"}
+       "go to Home Page"]]]))
 
 
 ;; main

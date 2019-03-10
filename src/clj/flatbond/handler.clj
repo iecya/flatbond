@@ -6,8 +6,7 @@
             [ring.middleware.reload :refer [wrap-reload]]
             [flatbond.helpers :as helpers]
 
-            [ring.middleware.format :refer [wrap-restful-format]]
-            [ring.middleware.params :refer [wrap-params]]))
+            [ring.middleware.format :refer [wrap-restful-format]]))
 
 (def flatbonds (atom []))
 

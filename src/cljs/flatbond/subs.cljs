@@ -46,3 +46,8 @@
   ::form-errors
   (fn [db _]
     (:form-errors db)))
+
+(re-frame/reg-sub
+  ::flatbond
+  (fn [db _]
+    (:flatbond db)))

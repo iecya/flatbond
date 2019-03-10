@@ -11,3 +11,8 @@
     padding-bottom: 0;
     height: auto;
 }
+
+.flatbond-title {
+    text-align: right;
+    font-weight: bold;
+}
