@@ -2,7 +2,7 @@
   (:require
     [re-frame.core :as re-frame]
     [flatbond.db :as db]
-    [ajax.core :refer [GET]]
+    [ajax.core :refer [GET POST]]
     [flatbond.helpers :as helpers]))
 
 
@@ -56,7 +56,7 @@
   (fn [db [_ period value]]
     (-> db
         (assoc-in [:flatbond-form :rent-value period] value)
-        (assoc :membership-fee (helpers/calculate-membership period value (:user-config db))))))
+        (assoc-in [:flatbond-form :membership-fee] (helpers/calculate-membership period value (:user-config db))))))
 
 (re-frame/reg-event-db
   :update-postcode
@@ -75,7 +75,10 @@
 
 (re-frame/reg-event-db
   :submit-form
-  (fn [db]
-    (let [form-validation (helpers/validate-form db)]
-      (println form-validation)
-      db)))
+  (fn [{:keys [flatbond-form client-id] :as db}]
+    (when (helpers/validate-form db)
+      (let [payload (helpers/payload flatbond-form client-id)]
+        (POST "/flatbond"
+              {:format :json
+               :params payload})))
+    db))

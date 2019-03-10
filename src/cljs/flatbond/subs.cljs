@@ -35,7 +35,7 @@
 (re-frame/reg-sub
   ::membership-fee
   (fn [db _]
-    (:membership-fee db)))
+    (get-in db [:flatbond-form :membership-fee])))
 
 (re-frame/reg-sub
   ::postcode

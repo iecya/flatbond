@@ -45,3 +45,15 @@
        (validate-postcode flatbond-form)))
 
 
+(defn- to-pence
+  [value]
+  (* 100 value))
+
+(defn payload
+  [{:keys [rent-period rent-value postcode membership-fee]} client-id]
+  {:rent (to-pence (get rent-value rent-period))
+   :membership-fee (-> membership-fee add-vat to-pence)
+   :postcode postcode
+   :client-id client-id})
+
+
